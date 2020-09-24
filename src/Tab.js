@@ -1,18 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React  from 'react';
 
 const Tab = (props) => {
-    const [activeS , setState] = useState(false);
-    const hanldClick = () => {
-        let currentS = props.isCurrent;
-        setState({
-            activeS : currentS
-        });
-        // 
-        props.changeActive(activeS);  
-    }
 
+    const handleClick = ()=> {
+        props.handleClick(props.data.name);
+    }
+    // console.log(props.isActive);
     return ( 
-        <a href={props.url} className = {props.isCurrent ? "active" : ""} onClick = {() => hanldClick()}>{props.title}</a>
+    
+        <li className= {props.isActive ? "active" : "" } onClick={handleClick} >
+            <span>{props.data.name}</span>
+        </li>
     );
 }
+
 export default Tab;

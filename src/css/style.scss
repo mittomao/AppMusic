@@ -1,0 +1,495 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
+* {
+    box-sizing: border-box;
+  }
+
+  body{
+    min-height: 100vh;
+    overflow: hidden;
+    // background: url(./../List_Icons/Bg.jpg) no-repeat;
+    // background-size: cover;
+    background: #030303;
+    font-family: 'Grandstander', cursive , sans-serif;
+  }
+  .main{
+      overflow: hidden;
+  }
+  li {
+      cursor: pointer;
+      color: #fff;
+  }
+  li.active {
+    color: red;
+}
+    .bg--aqua {
+        color: aqua;
+    }
+    .bg--white {
+        color: white;
+    }
+    .bg--blue{
+        color: #3867d6;
+    }
+  .container{
+    max-width: 100%;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+
+
+.lists-music{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
+.lists-music h2{
+    text-align: center;
+}
+.lists-music h2 span{
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    animation: neon .08s ease-in-out infinite alternate;
+}
+
+@keyframes neon {
+    from {
+        text-shadow:
+        0 0 6px rgba(202,228,225,0.92),
+        0 0 30px rgba(202,228,225,0.34),
+        0 0 12px rgba(30,132,242,0.52),
+        0 0 21px rgba(30,132,242,0.92),
+        0 0 34px rgba(30,132,242,0.78),
+        0 0 54px rgba(30,132,242,0.92);
+      }
+      to {
+        text-shadow:
+        0 0 6px rgba(202,228,225,0.98),
+        0 0 30px rgba(202,228,225,0.42),
+        0 0 12px rgba(30,132,242,0.58),
+        0 0 22px rgba(30,132,242,0.84),
+        0 0 38px rgba(30,132,242,0.88),
+        0 0 60px rgba(30,132,242,1);
+      }
+}
+
+// .track-loading span:nth-child(odd){
+   
+// }
+
+
+/* Top Music */
+
+.tops-music{
+    width:100%;
+    margin-top: 15px;
+   
+}
+.tops-music a{
+   text-decoration: none;
+}
+.tops-music__header{
+    border-bottom: 1px solid #18dc77;
+}
+
+.tops-music__header ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tops-music__header li{
+    width: calc(100%/3);
+    text-align: center;
+    padding: 15px;
+    
+}
+.tops-music__header li span{
+    display: block;
+    color: #fff;  
+    font-size:20px;
+    font-weight: bold;
+}
+
+.tops-music__header li.active{
+    color: #fff;
+    background-image : linear-gradient(to left, #18dc77 , #0eecc0)
+}
+
+.tops-music__body{
+    margin-top: 10px;
+    position: relative;
+    height: 150px;
+ 
+}
+.current-play{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 10px #eee;
+}
+.current-play img{
+    width: 100%;
+    height: 150px;
+    object-position: 100%;
+    object-fit: cover;
+}
+.current-songs{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,.5);
+}
+.box-music{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 0 10px 0 0;
+    color: #fff;
+   
+}
+// .box-music--header{
+//     color:#fff;
+// }
+
+.box-music .stt{
+    font-size: 28px;
+    font-weight: bold;
+    display: block;
+    padding: 15px 30px;
+    background-image : linear-gradient(to left, #18dc77 , #0eecc0);
+}
+.content {
+    padding-left: 20px;
+    color: #fff;
+    white-space:nowrap;
+    max-width: 45%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+.content span{
+    display: block;
+}
+
+ span.name-song{
+    font-size: 16px;
+    margin-bottom: 10px;
+ }
+span.name-song.active{
+    animation : goText 5s linear infinite;
+}
+
+@keyframes goText {
+    0%{
+        transform:translateX(0)
+    }
+    
+    100%{
+        transform:translateX(-100%)
+    }
+}
+ span.singer-song{
+    font-size: 12px;
+}
+
+.box-music .action{
+    margin-left: auto;
+    padding-right: 0px;
+    
+}
+.box-music .action a{
+    margin: 0 10px;
+    position: relative;
+}
+.box-music .action a i.fa{
+    transition: 0.4 ease;
+}
+
+
+
+.box-music .action a span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    transform:translate(-50%,-50%);
+    font-size: 8px;
+    color: #fff;
+    display: none;
+}
+.box-music .action a.active{
+    animation: flash
+    1s ease;
+}
+.box-music .action a.active i.fa{
+    color: red;
+    animation: pulse 1s ease;
+}
+.box-music .action a.active span{
+    display: block;
+}
+
+
+.box-music--header  .action a {
+    color: #fff;
+}
+
+.queue-music{
+    padding-top: 15px;
+    border: 1px solid #ddd;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+.queue-music:-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	background-color: #F5F5F5;
+    border-radius: 10px;
+    
+}
+.queue-music::-webkit-scrollbar
+{
+    width: 6px;
+    
+	background-color: #F5F5F5;
+}
+
+.queue-music::-webkit-scrollbar-thumb
+{
+    height: 100px;
+    background-image : linear-gradient(to left, #18dc77 , #0eecc0);
+}
+
+.lists-music__item{
+    padding: 10px 0px 10px 10px;
+}
+.lists-music__item:not(:last-child){
+    border-bottom: 1px solid #ddd;
+
+}
+
+.box-music .box-music__img{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+.overplay-play{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: 0.3s;
+}
+.box-music .box-music__img:hover .overplay-play{
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.overplay-play i.fa{
+    color: #fff;
+    font-size:2em
+}
+
+
+.box-music .avatar-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+
+.singer-song.text_new {
+    color: #0eecc0;
+}
+
+
+
+/* Read More */
+
+
+.read-more{
+    margin-top:20px;
+    text-align: center;
+}
+.read-more a{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    background-image : linear-gradient(to right, #7af0dc , #a523e1)
+}
+
+.col.col-4{
+    transition: 0.7s;
+}
+.d_none .col--8{
+    width: 100%;
+    animation:zoomIn
+    2s ease;
+
+    // transform:translateX(100%)
+}
+.d_none .col--4{
+    width: 0%;
+    animation:fadeOutRight 2s ease;
+}
+
+.col--8{
+    width: 66.67%;
+    transition: 0.5s;
+}
+.col--4{
+    width: 33.33%;
+    transition: 0.5s;
+
+}
+
+
+// Edm 
+.edm{
+    display: none;
+    position: absolute;
+    
+    width: 100%;
+    height: 100vh;
+    background-image: url(./../List_Icons/bg11.jpg);
+    background-size: cover;
+    animation : loadBg 500s linear infinite;
+}
+.edm.show{
+    display: block;
+}
+
+@keyframes loadBg {
+    0%{
+        background-position: 0;
+    }
+    50%{
+        background-position: 10000px;
+    }
+    100%{
+        background-position: 0;
+    }
+}
+
+.edm.show .road{
+    animation : loadWidth 2s ease;
+
+}
+@keyframes  loadWidth{
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+}
+.road{
+    position: absolute;
+    bottom: 30px;
+    width: 90%;
+    left: 50%;
+    transform-origin: bottom;
+    transform: translateX(-50%) perspective(200px) rotateX(15deg);
+    height: 130px;
+    background: black;
+
+}
+.road::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg , white 0% , white 70% , black 0% , black 70%);
+    background-size: 200px;
+    animation : loadRoad 5s linear infinite;
+
+}
+
+@keyframes loadRoad{
+    0%{
+        background-position: 0;
+    }
+    100%{
+        background-position: 100%;
+    }
+}
+.road::after{
+    content: '';
+    position: absolute;
+    bottom:-50px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: black;
+    transform-origin: top;
+    transform: perspective(1300px) rotateX(-60deg);
+}
+
+.catwalk{
+    width: 100%;
+}
+.catwalk img{
+    position: absolute;
+    bottom:30px;
+    right: 0;
+    height: 200px;
+    animation : loadImg 15s linear infinite;
+
+}
+@keyframes loadImg{
+    0%{
+        right: 0;
+    }
+    100%{
+        right: 80%;
+    }
+}
+
+.edm .back{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform:translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 70px;
+    background: rgba(0,0,0,.5);
+    clip-path: polygon(50% 0%, 100% 0, 50% 100%, 0 0);
+    z-index: 100;
+}
+.edm .back i.fa{
+    font-size:30px;
+    color: #fff;
+    
+    margin-top: -15px;
+
+}
+
+

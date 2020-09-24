@@ -7,58 +7,30 @@ import Tab from './Tab';
 
 
 
-const Tabs = () => {
-    const [isCurrent , setState] = useState(false);
-    const changeActive = (active) => {
-        // setState({
-        //     isCurrent : !active
-        // });
-    }
-
-    return (
-        <div className="tops-music__header">
-            <Tab  url = {"#"} title = {"Bảng Xếp Hạng"} isCurrent = {true} changeActive = {changeActive} />
-            <Tab  url = {"#"} title = {"K-Pop"} isCurrent = {false} changeActive = {changeActive}/>
-            <Tab  url = {"#"} title = {"V-Pop"} isCurrent = {false} changeActive = {changeActive}/>
-        </div>
-    );
-}
-
 
 
 const TopMusic = (props) => {
-    const [dataCurrentId, setState] = useState(0);
-
-    const [active] = useState(true);
+    // const [dataCurrentId, setState] = useState(0);
+    // const [active] = useState(true);
     const audios = props.song;
 
     // Lay Data tu Box Music Sang Va Chuyen Vao STate
-    const getMusic = (data) => {
+    // const getMusic = (data) => {
 
-        const dataId = data.id;
-        setState({
-            dataCurrentId: dataId
-        });
-
-        
-    }
-
-    // Ham Thay Doi active
-
-    // const hanldActive = () => {
-    //     let curentActive = active;
+    //     const dataId = data.id;
     //     setState({
-    //         active: !curentActive
+    //         dataCurrentId: dataId
     //     });
     // }
 
-    // Chuyen Du Lieu Len Appp
-    
-    props.getId(dataCurrentId);
 
-    
+
+    // Chuyen Du Lieu Len Appp
+
+    // props.getId();
+
+
     const showMusic = (data) => {
-        
         return data.map((item, i) => {
             return (<BoxMusic
                 key={i + 1}
@@ -66,16 +38,32 @@ const TopMusic = (props) => {
                 id={item.id}
                 name={item.title}
                 singer={item.artist}
-                hanldGetLink={getMusic}
+                hanldGetLink={props.getId}
             />);
         });
+    }
+
+    const handleClick = (data)=>{
+         props.handleClick(data);
     }
 
 
     return (
         <nav className="tops-music">
-            <Tabs 
-            />
+            <div className="tops-music__header">
+                <ul className="nav nav-tabs">
+                    {props.dataTab.map(function (tab, i) {
+                        return (
+                            <Tab
+                                key = {i}
+                                data={tab}
+                                isActive={props.activeTab === tab.name}
+                                handleClick={handleClick}
+                            />
+                        )
+                    })}
+                </ul>
+            </div>
             <div className="tops-music__body">
                 <div className="current-play">
                     <div className="current-imgs">

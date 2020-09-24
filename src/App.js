@@ -1,22 +1,29 @@
 
-import './style.scss';
+import './css/style.scss';
+import './css/music.scss';
 
 import React, { useState, useRef } from 'react';
 
 import TimeSlider from "react-input-slider";
 import songs from "./List_Songs";
-
+import person from './List_Icons/moonwalk.gif';
 
 
 // Import Icon
 
 // import Avatar from './List_Icons/avatar.png';
-import NextIcon from './List_Icons/NextIcon';
-import PrevIcon from './List_Icons/PrevIcon';
-import PlayIcon from './List_Icons/PlayIcon';
-import PauseIcon from './List_Icons/PauseIcon';
+// import NextIcon from './List_Icons/NextIcon';
+// import PrevIcon from './List_Icons/PrevIcon';
+// import PlayIcon from './List_Icons/PlayIcon';
+// import PauseIcon from './List_Icons/PauseIcon';
 import TopMusic from './topMusic';
+import Span from './spanTrack';
 
+const listTab = [
+  { 'id': 1, 'name': 'Tab1', 'url': '/mike' },
+  { 'id': 2, 'name': 'Tab2', 'url': '/donnie' },
+  { 'id': 3, 'name': 'Tab3', 'url': '/raph' }
+];
 
 const App = () => {
 
@@ -26,7 +33,8 @@ const App = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isPlay, setPlay] = useState(false);
-  const [index,setState] = useState();
+  const [activeTab, setState] = useState({ "activeTab": listTab[0].name, "isShowList": true , isStyle2 : false });
+  // const [isShowList] = useState(true);
 
   // Viet Ham Xu Ly
 
@@ -58,96 +66,216 @@ const App = () => {
 
   // Get Id Box Music
 
-  const getIdMusic = (id)=>{
-    // setAudioIndex(id.dataCurrentId);
-    // setState({
-    //   audioIndex : id.dataCurrentId
-    // });
-    console.log(id.dataCurrentId);
+  const getIdMusic = (id) => {
+    setAudioIndex(id);
+    setPlay({ isPlay: true });
   }
 
-  const isActive = (isPlay) ? "active" : "";
+
+  // const isActive = (isPlay) ? "active" : "";
 
   let TimeDuration = `${Math.floor(duration / 60)}:${Math.floor(duration % 60)}`;
   let Timecurrent = `${Math.floor(currentTime / 60)}:${Math.floor(currentTime % 60)}`;
 
 
+  const handleClick = (tab) => {
+
+    setState({
+      ...activeTab, activeTab: tab
+
+    });
+  }
+
+  // Show Lít
+  const showList = () => {
+    // setState(!isShowList);
+    setState({
+      ...activeTab, isShowList: !activeTab.isShowList
+    });
+  }
+
+  const showStyle2 = () => {
+    if(!activeTab.isShowList){
+      setState({
+        ...activeTab, isStyle2: !activeTab.isStyle2
+      });
+    }
+    
+    //  (2>1&&1<0)?alert("aa"):alert("bb")
+  }
+  const hideStyle2 = () => {
+
+      setState({
+        ...activeTab, isStyle2: !activeTab.isStyle2
+      });
+  }
+
+
+  // Style Css
+
+
+  const styleThum = {
+    width: '20px',
+    height: '20px',
+    borderRadius: '15px',
+    marginLeft: '-15px',
+    backgroundColor: '#EBECF0',
+    position: 'absolute',
+    top: "50% !important",
+    transform: 'translateY(-50%)',
+    zIndex: '1',
+    cursor: 'pointer',
+    boxShadow: '4px 4px 5px -2px rgba( 0, 0, 0 , .5), -4px -4px 5px 0px rgba(255,255,255, .4)'
+  }
+  const styleTrack = {
+
+    height: '6px',
+    width: '100%',
+    borderRadius: '3px',
+    border: 'none',
+    position: 'absolute',
+    bottom: '10px',
+    cursor: 'pointer',
+    boxShadow: 'inset 2px 2px 3px -2px rgba(0,0,0, .3), inset -2px -2px 3px 0px rgba(255,255,255, .5)'
+  }
+
+  // const createSpan = (n) => {
+  //   for (let i = 1; i <= n; i++) {
+  //       <Span duration={i + "s"}></Span>
+  //   }
+  // }
+
+
+
+  const randomDuration = (n) => {
+    return Math.floor(Math.random() * n);
+  }
+  console.log(activeTab)
+  //console.log(randomDuration(7));
   // Main
   return (
-    <div className="container">
-      <div className="row-flex">
-        <section className="lists-music">
-          <h2><span>APP MUSIC</span></h2>
-          <div id="app-cover">
-            <div id="player">
-              <div id="player-track" className={isActive}>
-                <div id="album-name">{songs[audioIndex].title}</div>
-                <div id="track-name">{songs[audioIndex].artist}</div>
-                <div id="track-time" className="active">
-                    <div id="current-time">{Timecurrent}</div>
-                    <div id="track-length">{TimeDuration}</div>
-                </div>
-                <TimeSlider
-                  axis="x"
-                  xmax={duration}
-                  x={currentTime}
-                  onChange={hanldTime}
-                  styles={{
-                    track: {
-                      background: '#ddd',
-                      borderRadius: '10px',
-                      height: '5px',
-                      marginBottom: '5px'
-                    },
-                    active: {
-                      backgroundColor: "purple",
-                    },
-                    thumb: {
-                      width: '12px',
-                      height: '12px',
-                      borderRadius: '50%',
-                      background: 'purple',
-                      display: 'block'
-                    },
-                  }}
-                />
-                <audio
-                  ref={audioRef}
-                  src={songs[audioIndex].src}
-                  onLoadedData={hanldLoadMusic}
-                  onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
-                  onEnded={() => setPlay(false)}
-                />
-
-
+    <div className="main">
+      <div className="container">
+        <div className={"row" + (activeTab.isShowList ? "" : " d_none")}>
+          <div className="col--8">
+            <div className= {"edm " + ((activeTab.isStyle2) ? " show" : "")}>
+              <button className="back" onClick={() => hideStyle2()}>
+                <i className="fa fa-angle-up" aria-hidden="true"></i>
+              </button>
+              <div className="road">
               </div>
-              <div id="player-content">
-                <div id="album-art" className={isActive}>
-                  <img src={songs[audioIndex].image} className="active" id="_1" />
-                  <div id="buffer-box">Buffering ...</div>
-                </div>
-                <div id="player-controls">
-                  <div className="control">
-                    <div className="button1" onClick={() => setAudioIndex((audioIndex - 1) % songs.length)}>
-                      <PrevIcon />
-                    </div>
-                  </div>
-                  <div className="control">
-                    <div className="button1" onClick={hanldToggle}>
-                      {isPlay ? <PauseIcon /> : <PlayIcon />}
-                    </div>
-                  </div>
-                  <div className="control">
-                    <div className="button1" onClick={() => setAudioIndex((audioIndex + 1) % songs.length)}>
-                      <NextIcon />
-                    </div>
-                  </div>
-                </div>
+              <div className="catwalk">
+                <img src={person} alt="" />
               </div>
             </div>
+            <section className="lists-music">
+
+              {
+                <div className={"track-loading" + (activeTab.isShowList ? "" : " active")}>
+                  <Span duration={"1s"}></Span>
+                  <Span duration={"2s"}></Span>
+                  <Span duration={"3s"}></Span>
+                  <Span duration={"4s"}></Span>
+                  <Span duration={"5s"}></Span>
+                  <Span duration={"6s"}></Span>
+                  <Span duration={"7s"}></Span>
+                </div>
+              }
+
+              <div className= {"card-music " + ((activeTab.isStyle2) ? "hide" : "")}>
+                <div className="d-flex">
+                  <button type="button" className="btn1 music-btn music-btn_fab" onClick={() => showStyle2()}><i className="fa fa-angle-down"></i></button>
+                  <div className="music-text flex-grow-1 my-auto text-center">
+                    <h2><span>APP MUSIC</span></h2>
+                  </div>
+                  <button type="button" className="btn1 music-btn music-btn_fab" onClick={() => showList()}><i className="fa fa-bars"></i></button>
+                </div>
+                <div className="card-music__body">
+                  <div className={"card-music__img " + (isPlay ? 'active' : '')}>
+                    <img
+                      src={songs[audioIndex].image}
+                    />
+                  </div>
+                  <div className="abc my-4">
+                    <div className={"card__title text-center " + (isPlay ? " active" : null)}>{songs[audioIndex].title}</div>
+                    <div className="card__text text-center">{songs[audioIndex].artist}</div>
+                  </div>
+                  <div className="music-slider mx-auto">
+                    <div className="music-slider__text music-slider__text_left">{Timecurrent}</div>
+                    {/* <div className="music-slider__back"></div>
+    <div className="music-slider__line"></div>
+    <div className="music-slider__thumb"></div> */}
+                    <TimeSlider
+                      axis="x"
+                      xmax={duration}
+                      x={currentTime}
+                      onChange={hanldTime}
+                      styles={{
+                        track: styleTrack,
+                        active: {
+                          background: 'linear-gradient(90deg, #779DFF, #9EB8FF)',
+                        },
+                        thumb: styleThum,
+                      }}
+                    />
+                    <audio
+                      ref={audioRef}
+                      src={songs[audioIndex].src}
+                      onLoadedData={hanldLoadMusic}
+                      onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+                      onEnded={() => setPlay(false)}
+                    />
+                    <div className="music-slider__text music-slider__text_right">{TimeDuration}</div>
+                  </div>
+                  <div className="mt-5 mb-3 d-flex w-100 player-controls">
+                    <button type="button" className="btn1 music-btn music-btn_fab mx-auto"
+                      onClick={() => setAudioIndex((audioIndex - 1) % songs.length)}
+                    >
+                      <i
+                        className="fa fa-backward"></i>
+                    </button>
+                    <button type="button" className="btn1 music-btn music-btn_fab music-btn_primary mx-auto"
+                      onClick={hanldToggle}
+                    >
+                      <i className={isPlay ? 'fa fa-pause' : 'fa fa-play'}></i>
+                    </button>
+                    <button type="button" className="btn1 music-btn music-btn_fab mx-auto"
+                      onClick={() => setAudioIndex((audioIndex + 1) % songs.length)}
+                    ><i
+                      className="fa fa-forward"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Avavtar IMG */}
+             
+              <div  className= {"card-music__img box-avatar-music " + ((activeTab.isStyle2) ? " show" : "")}>
+                <img src={songs[audioIndex].image} />
+              </div>
+              {
+                <div className={"track-loading" + (activeTab.isShowList ? "" : " active")}>
+                  <Span duration={"7s"}></Span>
+                  <Span duration={"6s"}></Span>
+                  <Span duration={"5s"}></Span>
+                  <Span duration={"4s"}></Span>
+                  <Span duration={"3s"}></Span>
+                  <Span duration={"2s"}></Span>
+                  <Span duration={"1s"}></Span>
+                </div>
+              }
+
+            </section>
           </div>
-        </section>
-        <TopMusic song = {songs} getId = {getIdMusic}/>
+          <div className="col--4">
+            <TopMusic
+              song={songs}
+              getId={getIdMusic}
+              dataTab={listTab}
+              activeTab={activeTab.activeTab}
+              handleClick={handleClick}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
